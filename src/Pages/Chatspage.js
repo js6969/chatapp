@@ -6,7 +6,6 @@ const Chatpage = () => {
 
     const fetchChats = async () => {
         const {data} = await axios.get("/api/chat");
-
         setChats(data);
     };
 
@@ -19,9 +18,9 @@ const Chatpage = () => {
         {chats.map((chat) => (
             <div key={chat._id}>{chat.chatName}</div>
         ))}
-    
     </div>
     );
 }
 
 export default Chatpage
+
