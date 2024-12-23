@@ -10,6 +10,7 @@ const Chatpage = () => {
     return (
     <div style={{ width: "100%" }}>
         {user && <SideDrawer/>}
+        
         <Box
             display="flex"
             justifyContent="space-between"
@@ -20,6 +21,7 @@ const Chatpage = () => {
             {user && <MyChats/>}
             {user && <ChatBox/>}
         </Box>
+        
         
     </div>
     );
