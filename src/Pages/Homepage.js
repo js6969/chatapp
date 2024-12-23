@@ -1,9 +1,18 @@
-import React from "react";
+import React , { useEffect } from "react";
 import { Container, Box, Text, Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import Login from "../components/Authentication/login"
 import SignUp from "../components/Authentication/signUp";
+import { useHistory } from "react-router-dom";
 
 const Homepage = () => {
+    const history = useHistory();
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("userInfo"));
+        
+        if (user) history.pushState("/chats");      
+    }, [history]);
+
     return (
         <Container maxW="xl" centerContent>
             <Box
@@ -18,7 +27,7 @@ const Homepage = () => {
                 borderWidth="1px"
             >
                 <Text fontSize="4xl" fontFamily="Work Sans" color="white">
-                    Bak-Bak
+                    ConvoHub
                 </Text>
             </Box>
             <Box
