@@ -83,7 +83,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { getSender } from "../config/ChatLogics";
 import ChatLoading from "./ChatLoading";
-// import GroupChatModal from "./miscellaneous/GroupChatModal";
+import GroupChatModal from "./miscellaneous/GroupChatModal";
 import { Button } from "@chakra-ui/react";
 import { ChatState } from "../Context/ChatProvider";
 
@@ -120,12 +120,11 @@ const MyChats = ({ fetchAgain }) => {
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChats();
-    // eslint-disable-next-line
   }, [fetchAgain]);
 
   return (
     <Box
-      d={{ base: selectedChat ? "none" : "flex", md: "flex" }}
+      display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
       flexDir="column"
       alignItems="center"
       p={3}
@@ -139,19 +138,22 @@ const MyChats = ({ fetchAgain }) => {
         px={3}
         fontSize={{ base: "28px", md: "30px" }}
         fontFamily="Work sans"
-        d="flex"
+        display="flex"
         w="100%"
         justifyContent="space-between"
         alignItems="center"
+        textColor={"black"}
       >
         My Chats
+        <GroupChatModal>
           <Button
-            d="flex"
-            fontSize={{ base: "17px", md: "10px", lg: "17px" }}
+            display="flex"
+            fontSize={{ base: "15px", md: "8px", lg: "15px" }}
             rightIcon={<AddIcon />}
           >
             New Group Chat
           </Button>
+        </GroupChatModal>
       </Box>
       <Box
         d="flex"
@@ -183,8 +185,8 @@ const MyChats = ({ fetchAgain }) => {
                 </Text>
                 {chat.latestMessage && (
                   <Text fontSize="xs">
-                    <b>{chat.latestMessage.sender.name} : </b>
-                    {chat.latestMessage.content.length > 50
+                    <b>{chat.latestMessage?.sender?.name} : </b>
+                    {chat.latestMessage?.content.length > 50
                       ? chat.latestMessage.content.substring(0, 51) + "..."
                       : chat.latestMessage.content}
                   </Text>
