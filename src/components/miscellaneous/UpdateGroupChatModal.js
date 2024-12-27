@@ -1,4 +1,4 @@
-import React , { useState } from "react";
+import { useState } from "react";
 import { IconButton , Button, useToast, FormControl , Input, Spinner } from "@chakra-ui/react";
 import {
   Modal,
@@ -20,18 +20,18 @@ import UserListItem from "../UserAvatar/UserListItem";
 const UpdateGroupChatModal = ({ fetchAgain , setFetchAgain , fetchMessages }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const [search, setSearch] = useState();
+    const [search, setSearch] = useState("");
     const [searchResult, setSearchResult] = useState([]);
-    const [loading, setLoading] = useState();
+    const [loading, setLoading] = useState(false);
     const [groupChatName, setGroupChatName] = useState();
-    const [renameloading, setRenameloading] = useState();
+    const [renameloading, setRenameloading] = useState(false);
 
     const toast = useToast();
 
     const { selectedChat , setSelectedChat , user } = ChatState();
 
     const handleRemove = async(user1) => {
-        if (selectedChat.groupAdmin._id !== user._id) {
+        if (selectedChat.groupAdmin._id !== user._id && user1._id !== user._id) {
             toast({
                 title: "Only Admins can remove members",
                 status: "error",
@@ -73,6 +73,7 @@ const UpdateGroupChatModal = ({ fetchAgain , setFetchAgain , fetchMessages }) =>
             });
             setLoading(false);
         }
+        setGroupChatName("");
     };
 
     const handleAddUser = async(user1) => {
@@ -128,6 +129,7 @@ const UpdateGroupChatModal = ({ fetchAgain , setFetchAgain , fetchMessages }) =>
             });
             setLoading(false);
         }
+        setGroupChatName("");
     };
 
     const handleRename = async() => {
@@ -142,7 +144,7 @@ const UpdateGroupChatModal = ({ fetchAgain , setFetchAgain , fetchMessages }) =>
                 },
             };
 
-            const { data } = await axios.put('/api/chat/rename', {
+            const { data } = await axios.put(`/api/chat/rename`, {
                 chatId: selectedChat._id,
                 chatName: groupChatName,
                 },
@@ -181,7 +183,7 @@ const UpdateGroupChatModal = ({ fetchAgain , setFetchAgain , fetchMessages }) =>
                 },
             };
 
-            const { data } = await axios.get('/api/user?search=${search}', config);
+            const { data } = await axios.get(`/api/user?search=${search}`, config);
             // console.log(data);
             setLoading(false);
             setSearchResult(data);
@@ -203,24 +205,41 @@ const UpdateGroupChatModal = ({ fetchAgain , setFetchAgain , fetchMessages }) =>
             
             <IconButton display={{base: "flex"}} icon={<ViewIcon />} onClick={onOpen} />
 
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal isOpen={isOpen} onClose={onClose} isCentered>
                 <ModalOverlay />
                 <ModalContent>
-                <ModalHeader>Modal Title</ModalHeader>
+                <ModalHeader
+                    fontSize="35px"
+                    fontFamily="Work sans"
+                    display="flex"
+                    justifyContent="center"
+                >
+                    {selectedChat.chatName}
+                </ModalHeader>
                 <ModalCloseButton />
-                <ModalBody>
-                    <Box>
-                        {setSelectedChat.users?.map((u) => {
+                <ModalBody
+                    display="flex"
+                    flexDir="column"
+                    alignItems="center"
+                >
+                    <Box 
+                        width="100%"
+                        display="flex"
+                        flexWrap="wrap"
+                        pb="3"
+                    >
+                        {selectedChat.users.map((u) => {
                             <UserBadgeItem 
-                                key={user._id}
+                                key={u._id}
                                 user={u}
+                                admin={selectedChat.groupAdmin}
                                 handleFunction={() => handleRemove(u)}
                             />
                         })}
                     </Box>
 
                     <Box>
-                        <FormControl display={"flex"}>
+                        <FormControl display="flex">
                             <Input
                             placeholder="Chat Name"
                             mb={"3"}
@@ -228,7 +247,7 @@ const UpdateGroupChatModal = ({ fetchAgain , setFetchAgain , fetchMessages }) =>
                             onChange={(e) => setGroupChatName(e.target.value)} 
                             />
                             <Button
-                            variant={"solid"}
+                            variant="solid"
                             colorScheme="teal"
                             ml={1}
                             isLoading={renameloading}
@@ -261,7 +280,7 @@ const UpdateGroupChatModal = ({ fetchAgain , setFetchAgain , fetchMessages }) =>
                 </ModalBody>
 
                 <ModalFooter>
-                    <Button colorScheme='red' onClick={() => handleRemove(user)}>
+                    <Button colorScheme="red" onClick={() => handleRemove(user)}>
                         Leave Group
                     </Button>
                 </ModalFooter>

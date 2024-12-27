@@ -4,14 +4,20 @@ import React from "react";
 const ChatLoading = () => {
     return (
         <Stack>
-            <Skeleton colorScheme="blue"/>
-            <Skeleton/>
-            <Skeleton/>
-            <Skeleton/>
-            <Skeleton/>
-            <Skeleton/>
+            <Skeleton height="45px" />
+            <Skeleton height="45px" />
+            <Skeleton height="45px" />
+            <Skeleton height="45px" />
+            <Skeleton height="45px" />
+            <Skeleton height="45px" />
+            <Skeleton height="45px" />
+            <Skeleton height="45px" />
+            <Skeleton height="45px" />
+            <Skeleton height="45px" />
+            <Skeleton height="45px" />
+            <Skeleton height="45px" />
         </Stack>
-    )
+    );
 };
 
 export default ChatLoading;

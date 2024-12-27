@@ -19,10 +19,10 @@ const Homepage = () => {
                 display="flex"
                 justifyContent={"center"}
                 alignItems={"center"}
-                p={3}
-                bg={"gray.500"}
-                w="100%"
-                m="40px 0 15px 0"
+                padding={3}
+                background={"gray.500"}
+                width="100%"
+                margin="40px 0 15px 0"
                 borderRadius="lg"
                 borderWidth="1px"
             >
@@ -31,31 +31,30 @@ const Homepage = () => {
                 </Text>
             </Box>
             <Box
-                w="100%"
+                width="100%"
                 padding={4}
                 bg={"gray.500"}
                 borderRadius={"lg"}
                 borderWidth={"1px"}
                 color="black"
             >
-                <Tabs variant='soft-rounded'>
+                <Tabs isFitted variant="soft-rounded">
                     <TabList mb="1em">
                         <Tab width="50%">Login</Tab>
                         <Tab width="50%">Sign Up</Tab>
                     </TabList>
                     <TabPanels>
                         <TabPanel>
-                            <Login/>
+                            <Login />
                         </TabPanel>
                         <TabPanel>
-                            <SignUp/>
+                            <SignUp />
                         </TabPanel>
                     </TabPanels>
-                    </Tabs>
+                </Tabs>
             </Box>
-
         </Container>
-    )
+    );
 }
 
-export default Homepage
+export default Homepage;

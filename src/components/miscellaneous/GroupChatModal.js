@@ -22,9 +22,9 @@ const GroupChatModal = ({ children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [groupChatName, setGroupChatName] = useState();
     const [selectedUsers, setSelectedUsers] = useState([]);
-    const [search, setSearch] = useState();
-    const [searchResult, setSearchResult] = useState();
-    const [loading, setLoading] = useState();
+    const [search, setSearch] = useState("");
+    const [searchResult, setSearchResult] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const toast = useToast();
 
@@ -51,7 +51,7 @@ const GroupChatModal = ({ children }) => {
             setSearchResult(data);
         } catch (error) {
             toast({
-                title: "Error Occured",
+                title: "Error Occured!",
                 description: "Failed to load search results",
                 status: "error",
                 duration: 5000,
@@ -88,7 +88,7 @@ const GroupChatModal = ({ children }) => {
                 config
                 );
 
-                setChats(data);
+                setChats([data, ...chats]);
                 onClose();
                 toast({
                     title: "New Group created!",
@@ -125,7 +125,7 @@ const GroupChatModal = ({ children }) => {
     };
 
     const handleDelete = (delUser) => {
-        selectedUsers.filter((sel) => sel._id !== delUser._id)
+        setSelectedUsers(selectedUsers.filter((sel) => sel._id !== delUser._id));
     };
 
     return (
@@ -136,11 +136,11 @@ const GroupChatModal = ({ children }) => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader
-            fontSize={"35px"}
-            fontFamily={"Work sans"}
-            display={"flex"}
-            justifyContent={"center"}
-            textColor={"black"}
+            fontSize="35px"
+            fontFamily="Work sans"
+            display="flex"
+            justifyContent="center"
+            textColor="black"
             >
                 Create Group Chat
             </ModalHeader>
@@ -151,34 +151,32 @@ const GroupChatModal = ({ children }) => {
                         placeholder="Chat Name"
                         mb="3"
                         onChange={(e) => setGroupChatName(e.target.value)}
-                        color={"black"}
+                        color="black"
                     />
                 </FormControl>
                 <FormControl>
                     <Input
-                        placeholder="Add Users"
+                        placeholder="Add Users eg: Kanishka, Dhruv"
                         mb="1"
                         onChange={(e) => handleSearch(e.target.value)}
-                        color={"black"}
+                        color="black"
                     />
                 </FormControl>
                 
-                <Box w="100%" display="flex" flexWrap="wrap">
+                <Box width="100%" display="flex" flexWrap="wrap">
                     {selectedUsers.map((u) => (
                         <UserBadgeItem 
-                            key={user._id}
+                            key={u._id}
                             user={u}
                             handleFunction={() => handleDelete(u)}
                         />
-                    ))}
-                
-                
-                {loading ? (
-                    <div>loading</div>
-                ) : (
-                    searchResult?.slice(0,4).map((user) => <UserListItem key={user._id} user={user} handleFunction={()=>handleGroup(user)}/>)
-                )}
+                    ))}             
                 </Box>
+                {loading ? (
+                    <div>Loading...</div>
+                ) : (
+                    searchResult?.slice(0,4).map((user) => (<UserListItem key={user._id} user={user} handleFunction={()=>handleGroup(user)}/>)
+                ))}
             </ModalBody>
 
             <ModalFooter>
@@ -189,8 +187,7 @@ const GroupChatModal = ({ children }) => {
         </ModalContent>
       </Modal>
     </>
-  )
-    
+  );
 };
 
 export default GroupChatModal;

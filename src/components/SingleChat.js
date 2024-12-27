@@ -8,6 +8,7 @@ import ProfileModal from "./miscellaneous/ProfileModal";
 import ScrollableChat from "./ScrollableChat";
 import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
+
 import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
@@ -208,8 +209,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             {loading ? (
               <Spinner
                 size="xl"
-                w={20}
-                h={20}
+                width={20}
+                height={20}
                 alignSelf="center"
                 margin="auto"
               />
@@ -249,7 +250,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         </>
       ) : (
         // to get socket.io on same page
-        <Box display="flex" alignItems="center" justifyContent="center" h="100%">
+        <Box display="flex" alignItems="center" justifyContent="center" height="100%" color="black">
           <Text fontSize="3xl" pb={3} fontFamily="Work sans">
             Click on a user to start chatting
           </Text>

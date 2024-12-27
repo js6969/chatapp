@@ -37,7 +37,7 @@ const SideDrawer = () => {
     const [loading, setLoading] = useState(false);
     const [loadingChat, setLoadingChat] = useState();
 
-    const { user , setSelectedChatState , chats , setChats , notification , setNotification } = ChatState();
+    const { user , setSelectedChat , chats , setChats , notification , setNotification } = ChatState();
     const navigate = useNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -51,12 +51,13 @@ const SideDrawer = () => {
     const handleSearch = async () => {
         if (!search) {
             toast({
-                title: "Please enter name or email",
+                title: "Please enter email",
                 status: "warning",
                 duration: 5000,
                 isClosable: true,
                 position: "top-left",
             });
+            return;
         }
 
         try {
@@ -99,7 +100,7 @@ const SideDrawer = () => {
 
             if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
 
-            setSelectedChatState(data);
+            setSelectedChat(data);
             setLoadingChat(false);
             onClose();
             
@@ -122,15 +123,15 @@ const SideDrawer = () => {
                 justifyContent="space-between"
                 alignItems="center"
                 bg="white"
-                w="100%"
-                p="5px 10px 5px 10px"
+                width="100%"
+                padding="5px 10px 5px 10px"
                 borderWidth="5px"
             >
                 <Tooltip label="Search users to chat" 
                 hasArrow 
                 placement="bottom-end">
                     <Button variant="ghost" onClick={onOpen}> 
-                        <i class="fas fa-search"></i>
+                        <i className="fas fa-search"></i>
                         <Text display={{base: "none", md: "flex"}} px="4">
                             Search User
                         </Text>
@@ -155,7 +156,7 @@ const SideDrawer = () => {
                                 <MenuItem 
                                     key={notif._id}
                                     onClick={() => {
-                                        setSelectedChatState(notif.chat);
+                                        setSelectedChat(notif.chat);
                                         setNotification(notification.filter((n) => n !== notif));
                                     }} 
                                 >
@@ -170,25 +171,25 @@ const SideDrawer = () => {
                         <MenuButton 
                             as={Button}
                             rightIcon={<ChevronDownIcon/>}
+                            bg="white"
                         >
                             <Avatar size="sm" cursor="pointer" name={user.name} src={user.pic}/>
                         </MenuButton>
                         <MenuList>
                             <ProfileModal user={user}>
-                                <MenuItem color="black">My Profile</MenuItem>
+                                <MenuItem color="black">My Profile</MenuItem>{" "}
                             </ProfileModal>
-                            <MenuDivider/>
+                            <MenuDivider />
                             <MenuItem onClick={logoutHandler} color={"black"}>Logout</MenuItem>
                         </MenuList>
                     </Menu>
-
                 </div>
             </Box>
 
             <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
                 <DrawerOverlay/>
                 <DrawerContent>
-                    <DrawerHeader borderWidth={"1px"} color={"black"}>
+                    <DrawerHeader borderBottomWidth={"1px"} color={"black"}>
                         Search users
                     </DrawerHeader>
 
@@ -204,7 +205,7 @@ const SideDrawer = () => {
                         </Box>
 
                         {loading ? (
-                            <ChatLoading/>
+                            <ChatLoading />
                         ) : (
                             searchResult?.map(user => (
                                 <UserListItem
@@ -214,13 +215,12 @@ const SideDrawer = () => {
                                 />
                             ))
                         )}
-                        {loadingChat && <Spinner ml="auto" display={"flex"}/>}
+                        {loadingChat && <Spinner ml="auto" display={"flex"} />}
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>
         </>
-    )
-
+    );
 }
 
 export default SideDrawer;

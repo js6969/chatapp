@@ -1,6 +1,5 @@
 import { IconButton, ModalOverlay, useDisclosure , Modal , ModalBody , ModalContent , ModalHeader , ModalCloseButton , ModalFooter , Button , Image , Text} from "@chakra-ui/react";
 import { ViewIcon } from "@chakra-ui/icons";
-import React from "react";
 
 const ProfileModal = ({ user, children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -18,24 +17,23 @@ const ProfileModal = ({ user, children }) => {
                 />
             )}
 
-            <Modal isCentered isOpen={isOpen} onClose={onClose}>
+            <Modal isCentered isOpen={isOpen} onClose={onClose} size="lg">
                 <ModalOverlay/>
-                    <ModalContent color={"black"} h="410px">
+                    <ModalContent color="black" height="410px">
                         <ModalHeader
-                            fontSize={"40px"}
-                            fontFamily={"Work sans"}
-                            display={"flex"}
-                            justifyContent={"center"}
+                            fontSize="40px"
+                            fontFamily="Work sans"
+                            display="flex"
+                            justifyContent="center"
                         >
                             {user.name}
                         </ModalHeader>
                         <ModalCloseButton />
                         <ModalBody
-                            display={"flex"}
-                            flexDir={"column"}
-                            alignItems={"center"}
-                            justifyContent={"space-between"}
-                            
+                            display="flex"
+                            flexDir="column"
+                            alignItems="center"
+                            justifyContent="space-between"       
                         >
                             <Image
                                 borderRadius="full"
@@ -45,7 +43,7 @@ const ProfileModal = ({ user, children }) => {
                             />
                             <Text
                                 fontFamily="Work sans"
-                                fontSize={{ base: "20px", md: "25px" }}  
+                                fontSize={{ base: "28px", md: "30px" }}  
                                 >
                                     Email: {user.email}
                             </Text>

@@ -14,20 +14,20 @@ import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [show, setShow] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
   const [pic, setPic] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [picLoading, setPicLoading] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
 
   const handleClick = () => setShow(!show);
 
   const postDetails = (pics) => {
-    setLoading(true);
-    if (!pics) {
+    setPicLoading(true);
+    if (pics === undefined) {
       toast({
         title: "Please select an image!",
         status: "warning",
@@ -35,7 +35,7 @@ const SignUp = () => {
         isClosable: true,
         position: "bottom",
       });
-      setLoading(false);
+      setPicLoading(false);
       return;
     }
 
@@ -52,7 +52,7 @@ const SignUp = () => {
         .then((res) => res.json())
         .then((data) => {
           setPic(data.url.toString());
-          setLoading(false);
+          setPicLoading(false);
           toast({
             title: "Image uploaded successfully",
             status: "success",
@@ -70,7 +70,7 @@ const SignUp = () => {
             isClosable: true,
             position: "bottom",
           });
-          setLoading(false);
+          setPicLoading(false);
         });
     } else {
       toast({
@@ -81,12 +81,13 @@ const SignUp = () => {
         isClosable: true,
         position: "bottom",
       });
-      setLoading(false);
+      setPicLoading(false);
+      return;
     }
   };
 
   const submitHandler = async () => {
-    setLoading(true);
+    setPicLoading(true);
     if (!name || !email || !password || !confirmPassword) {
       toast({
         title: "Please fill in all fields",
@@ -95,19 +96,19 @@ const SignUp = () => {
         isClosable: true,
         position: "bottom",
       });
-      setLoading(false);
+      setPicLoading(false);
       return;
     }
 
     if (password !== confirmPassword) {
       toast({
         title: "Passwords do not match",
-        status: "error",
+        status: "warning",
         duration: 5000,
         isClosable: true,
-        position: "top",
+        position: "bottom",
       });
-      setLoading(false);
+      setPicLoading(false);
       return;
     }
 
@@ -119,7 +120,7 @@ const SignUp = () => {
             },
         };
 
-        const { data } = await axios.post("api/user", {name, email, password, pic }, config);
+        const { data } = await axios.post("/api/user", {name, email, password, pic, }, config);
 
         toast({
             title: "Account created successfully",
@@ -130,7 +131,7 @@ const SignUp = () => {
         });
 
         localStorage.setItem("userInfo", JSON.stringify(data));
-        setLoading(false);
+        setPicLoading(false);
         navigate("/chats");
     } catch (error) {
         toast({
@@ -141,12 +142,12 @@ const SignUp = () => {
           isClosable: true,
           position: "bottom",
         });
-        setLoading(false);
+        setPicLoading(false);
     }
   };
 
   return (
-    <VStack spacing={5}>
+    <VStack spacing="5px">
       <FormControl id="first-name" isRequired>
         <FormLabel color="blue.900">Name</FormLabel>
         <Input
@@ -157,10 +158,10 @@ const SignUp = () => {
       </FormControl>
 
       <FormControl id="email" isRequired>
-        <FormLabel color="blue.900">Email</FormLabel>
+        <FormLabel color="blue.900">Email Address</FormLabel>
         <Input
           type="email"
-          placeholder="Enter your email"
+          placeholder="Enter your email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -168,7 +169,7 @@ const SignUp = () => {
 
       <FormControl id="password" isRequired>
         <FormLabel color="blue.900">Password</FormLabel>
-        <InputGroup>
+        <InputGroup size="md">
           <Input
             type={show ? "text" : "password"}
             placeholder="Enter your password"
@@ -176,7 +177,7 @@ const SignUp = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick}>
+            <Button height="1.75rem" size="sm" onClick={handleClick}>
               {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
@@ -185,26 +186,26 @@ const SignUp = () => {
 
       <FormControl id="confirm-password" isRequired>
         <FormLabel color="blue.900">Confirm Password</FormLabel>
-        <InputGroup>
+        <InputGroup size="md">
           <Input
             type={show ? "text" : "password"}
-            placeholder="Confirm your password"
+            placeholder="Confirm password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
           <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick}>
+            <Button height="1.75rem" size="sm" onClick={handleClick}>
               {show ? "Hide" : "Show"}
             </Button>
           </InputRightElement>
         </InputGroup>
       </FormControl>
 
-      <FormControl id="pic" isRequired>
+      <FormControl id="pic">
         <FormLabel color="blue.900">Upload your picture</FormLabel>
         <Input
           type="file"
-          p={1.5}
+          padding={1.5}
           accept="image/*"
           onChange={(e) => postDetails(e.target.files[0])}
         />
@@ -214,7 +215,7 @@ const SignUp = () => {
         width="100%"
         mt={4}
         onClick={submitHandler}
-        isLoading={loading}
+        isLoading={picLoading}
         colorScheme="blue"
       >
         Sign Up
