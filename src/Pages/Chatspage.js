@@ -4,6 +4,7 @@ import MyChats from "../components/MyChats";
 import ChatBox from "../components/ChatBox";
 import { Box } from "@chakra-ui/react";
 import { useState } from "react";
+import theme from "../theme";
 
 const Chatpage = () => {
     const { user } = ChatState();
@@ -19,6 +20,7 @@ const Chatpage = () => {
             width="100%"
             height="91.5vh"
             padding="10px"
+            theme = {theme}
         >
             {user && <MyChats fetchAgain={fetchAgain} />}
             {user && (

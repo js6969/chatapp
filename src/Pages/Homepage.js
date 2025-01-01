@@ -3,6 +3,7 @@ import { Container, Box, Text, Tabs, TabList, TabPanels, Tab, TabPanel } from "@
 import Login from "../components/Authentication/login"
 import SignUp from "../components/Authentication/signUp";
 import { useNavigate } from "react-router-dom";
+import theme from "../theme";
 
 const Homepage = () => {
     const navigate = useNavigate();

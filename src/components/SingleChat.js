@@ -170,6 +170,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             display="flex"
             justifyContent={{ base: "space-between" }}
             alignItems="center"
+            color="black"
           >
             <IconButton
               display={{ base: "flex", md: "none" }}

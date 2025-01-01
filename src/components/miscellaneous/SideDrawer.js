@@ -71,8 +71,8 @@ const SideDrawer = () => {
 
             const { data } = await axios.get(`/api/user?search=${search}`, config);
 
-            setLoading(false);
             setSearchResult(data);
+            setLoading(false);
         } catch (error) {
             toast({
                 title: "Error Occured!",
@@ -200,6 +200,7 @@ const SideDrawer = () => {
                                 mr={2}
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
+                                color="black"
                             />
                             <Button onClick={handleSearch}>Go</Button>
                         </Box>
