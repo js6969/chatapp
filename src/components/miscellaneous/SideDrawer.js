@@ -29,7 +29,8 @@ import ChatLoading from "../ChatLoading";
 import UserListItem from "../UserAvatar/UserListItem";
 import axios from 'axios';
 import { getSender } from "../../config/ChatLogics";
-import NotificationBadge , { Effect } from "react-notification-badge";
+import NotificationBadge , { Effect } from "react-notification-badge"; 
+
 
 const SideDrawer = () => {
     const [search, setSearch] = useState("");
@@ -122,10 +123,10 @@ const SideDrawer = () => {
                 display="flex"
                 justifyContent="space-between"
                 alignItems="center"
-                bg="white"
+                bg="gray.500"
                 width="100%"
                 padding="5px 10px 5px 10px"
-                borderWidth="5px"
+                borderWidth="5px"              
             >
                 <Tooltip label="Search users to chat" 
                 hasArrow 
@@ -133,7 +134,7 @@ const SideDrawer = () => {
                     <Button variant="ghost" onClick={onOpen}> 
                         <i className="fas fa-search"></i>
                         <Text display={{base: "none", md: "flex"}} px="4">
-                            Search User
+                            Search Users
                         </Text>
                     </Button>
                 </Tooltip>
@@ -170,10 +171,11 @@ const SideDrawer = () => {
                     <Menu>
                         <MenuButton 
                             as={Button}
-                            rightIcon={<ChevronDownIcon/>}
-                            bg="white"
+                            // rightIcon={<ChevronDownIcon/>}
+                            bg="gray.500"
                         >
-                            <Avatar size="sm" cursor="pointer" name={user.name} src={user.pic}/>
+                            <Avatar size="sm" cursor="pointer" name={user.name} src={user.pic}
+                            bg="gray.900"/>
                         </MenuButton>
                         <MenuList>
                             <ProfileModal user={user}>
@@ -189,20 +191,21 @@ const SideDrawer = () => {
             <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
                 <DrawerOverlay/>
                 <DrawerContent>
-                    <DrawerHeader borderBottomWidth={"1px"} color={"black"}>
+                    <DrawerHeader borderBottomWidth={"1px"}  bgColor={"gray.700"}>
                         Search users
                     </DrawerHeader>
 
-                    <DrawerBody>
-                        <Box display={"flex"} pb={2}>
+                    <DrawerBody bgColor={"gray.500"}>
+                        <Box display={"flex"} pb={2} >
                             <Input
-                                placeholder="Search by name or email"
+                                bgColor={"white"}
+                                placeholder="Search user by name or email"
                                 mr={2}
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 color="black"
                             />
-                            <Button onClick={handleSearch}>Go</Button>
+                            <Button onClick={handleSearch} bgColor={"gray.600"}>Go</Button>
                         </Box>
 
                         {loading ? (

@@ -20,7 +20,6 @@ const Chatpage = () => {
             width="100%"
             height="91.5vh"
             padding="10px"
-            theme = {theme}
         >
             {user && <MyChats fetchAgain={fetchAgain} />}
             {user && (

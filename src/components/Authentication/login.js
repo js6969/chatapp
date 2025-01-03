@@ -86,8 +86,8 @@ const Login = () => {
                 />
             </FormControl>
 
-            <FormControl id="password" isRequired color={"blue.900"}>
-                <FormLabel>
+            <FormControl id="password" isRequired >
+                <FormLabel color={"blue.900"}>
                     Password
                 </FormLabel>
                 <InputGroup size="md">
@@ -97,7 +97,7 @@ const Login = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <InputRightElement width="4.5rem">
+                    <InputRightElement width="4.5rem" >
                         <Button height="1.75rem" size="sm" onClick={handleClick}>
                             {show ? "Hide" : "Show"}
                         </Button>

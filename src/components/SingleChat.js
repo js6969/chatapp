@@ -121,7 +121,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   }, [selectedChat]);
 
   useEffect(() => {
-    socket.on("message recieved", (newMessageRecieved) => {
+    socket.on("message received", (newMessageRecieved) => {
       if (
         !selectedChatCompare || // if chat is not selected or doesn't match current chat
         selectedChatCompare._id !== newMessageRecieved.chat._id
@@ -176,6 +176,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               display={{ base: "flex", md: "none" }}
               icon={<ArrowBackIcon />}
               onClick={() => setSelectedChat("")}
+              bgColor="gray.600"
             />
             {messages &&
               (!selectedChat.isGroupChat ? (
@@ -201,7 +202,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             flexDir="column"
             justifyContent="flex-end"
             padding={3}
-            bg="#E8E8E8"
+            bg="gray.300"
             width="100%"
             height="100%"
             borderRadius="lg"
@@ -241,7 +242,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               )}
               <Input
                 variant="filled"
-                bg="#E0E0E0"
+                bg="gray.500"
                 placeholder="Enter a message.."
                 value={newMessage}
                 onChange={typingHandler}
